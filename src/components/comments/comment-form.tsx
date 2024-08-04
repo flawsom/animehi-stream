@@ -38,7 +38,6 @@ const commentSchema = z.object({
 type Inputs = z.infer<typeof commentSchema>
 
 type CommentFormProps = {
-  animeId: string
   episodeNumber: string
   anilistId: string
 }
@@ -50,7 +49,6 @@ export type TPage<TData> = {
 }
 
 export default function CommentForm({
-  animeId,
   episodeNumber,
   anilistId,
 }: CommentFormProps) {
@@ -62,9 +60,9 @@ export default function CommentForm({
   const queryKey = useMemo(
     () => [
       QUERY_KEYS.GET_INFINITE_COMMENTS,
-      `${animeId}-episode-${episodeNumber}`,
+      `${anilistId}-episode-${episodeNumber}`,
     ],
-    [animeId, episodeNumber]
+    [anilistId, episodeNumber]
   )
 
   const form = useForm<z.infer<typeof commentSchema>>({
@@ -110,7 +108,7 @@ export default function CommentForm({
   async function handleOnSubmit(data: Inputs) {
     const response = await createComment({
       commentText: data.comment,
-      animeId,
+      animeId: anilistId,
       episodeNumber,
       anilistId,
     })

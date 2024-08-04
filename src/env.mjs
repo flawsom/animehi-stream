@@ -3,8 +3,8 @@ import { z } from "zod"
 
 export const env = createEnv({
   server: {
-    UPSTASH_REDIS_REST_URL: z.string(),
-    UPSTASH_REDIS_REST_TOKEN: z.string(),
+    UPSTASH_REDIS_REST_URL: z.string().nullish(),
+    UPSTASH_REDIS_REST_TOKEN: z.string().nullish(),
     CLIENT_ID: z.string(),
     CLIENT_SECRET: z.string(),
     GRAPHQL_ENDPOINT: z.string(),
@@ -16,9 +16,10 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_ANIME_API_URL: z.string().url(),
     NEXT_PUBLIC_APP_URL: z.string().url(),
-    NEXT_PUBLIC_PROXY_URI: z.string().url(),
+    NEXT_PUBLIC_PROXY_URI: z.string().url().nullish(),
     NEXT_PUBLIC_ANIME_API_URL_V2: z.string().url(),
     NEXT_PUBLIC_ANIME_API_URL_V3: z.string().url(),
+    NEXT_PUBLIC_SKIP_TIMES: z.string().url(),
   },
   runtimeEnv: {
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
@@ -35,5 +36,6 @@ export const env = createEnv({
     ANIME_API_URI_V2: process.env.ANIME_API_URI_V2,
     NEXT_PUBLIC_ANIME_API_URL_V2: process.env.NEXT_PUBLIC_ANIME_API_URL_V2,
     NEXT_PUBLIC_ANIME_API_URL_V3: process.env.NEXT_PUBLIC_ANIME_API_URL_V3,
+    NEXT_PUBLIC_SKIP_TIMES: process.env.NEXT_PUBLIC_SKIP_TIMES,
   },
 })

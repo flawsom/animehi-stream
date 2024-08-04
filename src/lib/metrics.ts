@@ -80,6 +80,7 @@ export const getNewestComments = cache(async () => {
           userName: true,
           image: true,
           email: true,
+          name: true,
         },
       },
     },
@@ -87,3 +88,49 @@ export const getNewestComments = cache(async () => {
 
   return comments
 })
+
+export const accessToken = async function () {
+  const session = await auth()
+
+  const userId = session?.user.id
+
+  if (userId) {
+    const account = await db.account.findFirst({
+      where: {
+        userId,
+        token_type: "bearer",
+      },
+    })
+
+    return account?.access_token
+  }
+}
+
+export const getBookmark = async function (userId: string) {
+  const bookMarks = await db.bookmark.findMany({
+    where: {
+      userId,
+    },
+  })
+
+  return bookMarks
+}
+
+export const getContinueWatching = async function () {
+  const session = await auth()
+
+  if (!session) return
+
+  const userId = session.user.id
+
+  const watching = await db.watchlist.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      updatedAt: "asc",
+    },
+  })
+
+  return watching
+}

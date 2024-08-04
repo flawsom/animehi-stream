@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useTransition } from "react"
 import { Button, buttonVariants } from "./ui/button"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -25,9 +25,11 @@ import Register from "./auth/register"
 import { useAuthStore } from "@/store"
 
 import Link from "next/link"
-import { signOut } from "next-auth/react"
+import { logout } from "@/server/auth"
 import { useSession } from "next-auth/react"
 import { ImSpinner8 } from "react-icons/im"
+import { toast } from "sonner"
+import { loginAnilist } from "@/server/auth"
 
 const AuthForm = () => {
   const { data: session, status } = useSession()
@@ -35,6 +37,7 @@ const AuthForm = () => {
     store.isAuthOpen,
     store.setIsAuthOpen,
   ])
+  const [isAnilistLoading, startTransitionAnilist] = useTransition()
 
   const [isLogin, setIsLogin] = useAuthStore((store) => [
     store.isLogin,
@@ -48,10 +51,6 @@ const AuthForm = () => {
       </div>
     )
   }
-
-  console.log(status)
-
-  console.log(isAuthOpen)
 
   return (
     <>
@@ -92,7 +91,10 @@ const AuthForm = () => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link className="w-full" href={`/profile/${session?.user?.id}`}>
+                <Link
+                  className="w-full"
+                  href={`/user/${session?.user?.name}/${session.user.id}`}
+                >
                   Profile
                 </Link>
               </DropdownMenuItem>
@@ -104,7 +106,7 @@ const AuthForm = () => {
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <button
-                onClick={() => signOut()}
+                onClick={() => logout()}
                 // variant="ghost"
                 className="relative h-8 w-full justify-start"
               >
@@ -120,8 +122,8 @@ const AuthForm = () => {
       )}
 
       <Dialog open={isAuthOpen} onOpenChange={setIsAuthOpen}>
-        <DialogContent className="pb-12 md:pb-6">
-          <DialogHeader>
+        <DialogContent className="p-8">
+          {/* <DialogHeader>
             <DialogTitle>
               {!isLogin ? "Login" : "Create an account"}
             </DialogTitle>
@@ -154,7 +156,21 @@ const AuthForm = () => {
                 </button>
               </>
             )}
-          </div>
+          </div> */}
+          <Button
+            disabled={isAnilistLoading}
+            type="button"
+            className="w-full"
+            onClick={() => {
+              startTransitionAnilist(async () => {
+                await loginAnilist().then(() =>
+                  toast.success("Signed in successfully")
+                )
+              })
+            }}
+          >
+            Sign In with Anilist
+          </Button>
         </DialogContent>
       </Dialog>
     </>

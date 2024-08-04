@@ -14,9 +14,7 @@ type ColumnProps = {
 }
 
 const Column = ({ results, seasonalTitle, browse }: ColumnProps) => {
-  if (results.length === 0) {
-    return <div>{seasonalTitle} not found</div>
-  }
+  console.log(results)
 
   return (
     <div className="w-full">
@@ -32,7 +30,10 @@ const Column = ({ results, seasonalTitle, browse }: ColumnProps) => {
         <div className="bg-transparent">
           <ul className="flex flex-col items-center gap-2">
             {results?.map((result) => (
-              <li key={result?.id} className="relative w-full rounded-md">
+              <li
+                key={result?.id}
+                className="relative w-full rounded-md bg-background"
+              >
                 <Link
                   href={`/anime/${transformedTitle(result?.title?.english ?? result?.title?.romaji)}/${result?.id}`}
                   aria-label={result?.title?.english ?? result?.title?.romaji}

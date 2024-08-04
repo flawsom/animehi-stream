@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 
 // Import Swiper styles
@@ -42,8 +42,6 @@ const SwiperContinueWatching = (props: SwiperContinueWatchingProps) => {
       return toast.dismiss()
     },
   })
-
-  console.log(results)
 
   return (
     <Swiper
@@ -132,7 +130,7 @@ const SwiperContinueWatching = (props: SwiperContinueWatchingProps) => {
               </div>
               <Link
                 className="group relative aspect-video w-full overflow-hidden rounded-md md:w-[320px]"
-                href={`/watch?id=${result.anilistId}&slug=${result.animeId}&ep=${result.episodeNumber}`}
+                href={`/watch/${result.anilistId}&ep=${result.episodeNumber}`}
               >
                 <div className="absolute z-30 h-full w-full bg-gradient-to-t from-background/70 from-20% to-transparent transition-all duration-300 ease-out group-hover:to-background/40"></div>
                 {/* <span className="absolute bottom-0 left-0 z-30 h-[2px] bg-red-600"></span> */}

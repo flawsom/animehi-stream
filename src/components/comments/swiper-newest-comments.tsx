@@ -68,16 +68,18 @@ const SwiperNewestComments = ({
                       <Avatar className="h-8 w-8">
                         <AvatarImage
                           src={newestComment.user.image ?? ""}
-                          alt={newestComment.user.userName ?? ""}
+                          alt={newestComment.user.name ?? ""}
                         />
                         <AvatarFallback>
                           <div className="h-full w-full animate-pulse bg-background"></div>
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col gap-1">
-                        <Link href={`/accounts/`}>
+                        <Link
+                          href={`/user/${newestComment.user.name}/${newestComment.user.id}`}
+                        >
                           <div className="text-[15px] leading-6 text-primary transition hover:underline">
-                            {newestComment.user.userName}
+                            {newestComment.user.name}
                           </div>
                         </Link>
                         <span className="text-xs text-muted-foreground/60">
@@ -98,7 +100,7 @@ const SwiperNewestComments = ({
                   <div className="mt-3 line-clamp-1 flex items-center overflow-hidden text-ellipsis">
                     <Link
                       title={newestComment.animeId}
-                      href={`/watch?id=${newestComment.anilistId}&slug=${newestComment.animeId}&ep=${newestComment.episodeNumber}`}
+                      href={`/watch/${newestComment.anilistId}&ep=${newestComment.episodeNumber}`}
                       className="line-clamp-1 text-primary hover:text-primary/90"
                     >
                       {newestComment.animeId}

@@ -168,10 +168,19 @@ export async function watch(episodeId: string) {
   return data
 }
 
-export const animeInfo = cache(async function (animeId: string) {
-  if (!animeId) throw new Error("Please provide a anime Id")
+export const animeInfo = cache(async function (
+  animeId: string,
+  provider = "gogoanime"
+) {
+  if (!animeId)
+    return {
+      message: "Please provide animeId",
+    }
 
-  const response = await fetch(`${publicUrl}/api/anime/info/${animeId}`)
+  const params = new URLSearchParams({ provider })
+  const response = await fetch(
+    `${animeApi}/meta/anilist/data/${animeId}?${params.toString()}`
+  )
 
   if (!response.ok) {
     return { message: "Failed to fetch" }

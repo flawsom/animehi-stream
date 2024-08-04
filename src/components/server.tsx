@@ -30,7 +30,6 @@ type ServerProps = {
 
 export default function Server({
   animeResult,
-  animeId,
   anilistId,
   currentUser,
   lastEpisode,
@@ -179,7 +178,7 @@ export default function Server({
         <div className="flex items-center">
           {children}
           <BookmarkForm
-            animeId={animeId}
+            animeId={anilistId}
             userId={currentUser?.id}
             bookmarks={currentUser?.bookMarks}
             animeResult={animeResult}
@@ -204,7 +203,7 @@ export default function Server({
       )}
 
       <div className="grid grid-cols-1 items-center gap-2 overflow-hidden rounded-md md:grid-cols-[1fr_380px] md:flex-row">
-        <div className="flex h-full w-full flex-col justify-center gap-3 rounded-md bg-secondary px-5 py-3 text-left text-sm">
+        <div className="flex h-full w-full flex-col justify-center gap-3 rounded-md bg-secondary/20 px-5 py-3 text-left text-sm">
           <div className="flex items-center gap-1">
             You are watching
             <span className="font-semibold">Episode {lastEpisode}</span>
@@ -215,7 +214,7 @@ export default function Server({
           <span>If current server doesnt work please try other servers.</span>
           <NextAiringEpisode animeInfo={animeResult} />
         </div>
-        <div className="flex h-full flex-col items-start justify-center gap-2 rounded-md bg-secondary p-3 pl-4">
+        <div className="flex h-full flex-col items-start justify-center gap-2 rounded-md bg-secondary/20 p-3 pl-4">
           <div className="flex items-center gap-2">
             <span>
               <FaClosedCaptioning />

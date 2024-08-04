@@ -161,14 +161,14 @@ const RepliesItem = (props: ReplyItemProps) => {
           <div className="absolute left-[-38px] top-[15px] h-[2px] w-[45px] bg-input md:left-[-45px]"></div>
           <span className="inline">
             <Link
-              href={`/profile/`}
+              href={`/user/${reply.user.name}/${reply.user.id}`}
               className="relative inline-block w-full shrink basis-auto items-stretch"
               // aria-label={comment.user?.name}
             >
               <Avatar className="h-6 w-6">
                 <AvatarImage
                   src={reply.user.image ?? "/default-image.png"}
-                  alt={`${reply.user.userName}`}
+                  alt={`${reply.user.name}`}
                   className="h-6 w-6"
                 />
                 <AvatarFallback>
@@ -255,14 +255,14 @@ const RepliesItem = (props: ReplyItemProps) => {
                     <span className="inline">
                       <Link
                         className="inline"
-                        href={`/profile/${reply.userId}`}
+                        href={`/user/${reply.user.name}/${reply.user.id}`}
                       >
                         <span className="inline-flex">
                           <span
                             className="max-w-full text-sm font-medium text-foreground underline-offset-1 hover:underline"
                             style={{ wordBreak: "break-word" }}
                           >
-                            {reply.user.userName}
+                            {reply.user.name}
                           </span>
                         </span>
                       </Link>
@@ -275,7 +275,7 @@ const RepliesItem = (props: ReplyItemProps) => {
                         className="relative m-1 inline-block max-w-full whitespace-normal break-words rounded text-foreground"
                         style={{ wordBreak: "break-word" }}
                       >
-                        <div className="py-2 pl-4 pr-7">
+                        <div className="py-2 pr-7">
                           <div className="block py-[4px]">
                             <span
                               className="break-words"
@@ -287,7 +287,7 @@ const RepliesItem = (props: ReplyItemProps) => {
                               >
                                 <div
                                   dir="auto"
-                                  className="text-start font-sans"
+                                  className="text-foreground/80s text-start font-sans"
                                 >
                                   {reply.content}
                                 </div>
